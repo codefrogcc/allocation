@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.codefrogcc.allocation</groupId>
-    <artifactId>common-config</artifactId>
+    <groupId>com.github.codefrogcc</groupId>
+    <artifactId>allocation</artifactId>
     <version>1.0.0</version>
 
     <parent>
@@ -118,31 +118,6 @@
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>3.14</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>3.14</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.satant</groupId>
-            <artifactId>pj.mybatis</artifactId>
-            <version>2.2.1</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>mybatis-spring-boot-starter</artifactId>
-                    <groupId>org.mybatis.spring.boot</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>mapper</artifactId>
-                    <groupId>tk.mybatis</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
     <profiles>
