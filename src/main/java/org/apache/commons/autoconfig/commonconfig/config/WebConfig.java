@@ -4,6 +4,7 @@ package org.apache.commons.autoconfig.commonconfig.config;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import org.apache.commons.access.AccessInterceptor;
 import org.apache.commons.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,9 @@ public class WebConfig {
     @Autowired
     private LoginInterceptor loginInterceptor;
 
+    @Autowired
+    AccessInterceptor accessInterceptor;
+
     @Bean
     public WebMvcConfigurerAdapter webMvcConfigurerAdapter(){
         WebMvcConfigurerAdapter webMvcConfigurerAdapter = new WebMvcConfigurerAdapter(){
@@ -37,6 +41,8 @@ public class WebConfig {
 
                 registry.addInterceptor(loginInterceptor).addPathPatterns("/main/**")
                         .excludePathPatterns("/main/subaccount/adminLogin","/main/subaccount/login"); //.excludePathPatterns("api/path/login");
+
+                registry.addInterceptor(accessInterceptor);
             }
 
             @Override
