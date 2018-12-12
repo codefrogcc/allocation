@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 public class AccessInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisUtil redisUtil;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -29,16 +29,12 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
             String telphone = request.getParameter("telphone");
             String type = request.getParameter("type");
             String deployType = request.getParameter("deployType");
-            if(StringUtils.isBlank(type)){
-                return true;
-            }
             HandlerMethod hm = (HandlerMethod)handler;
             Method method = hm.getMethod();
             AccessLimit accessLimit = hm.getMethodAnnotation(AccessLimit.class);
             if(accessLimit == null) {
                 return true;
             }
-
             String key = request.getRequestURI()+"/"+method.getName()+"/";
             if(StringUtils.isBlank(deployType)){
                 if("1".equals(type)){
@@ -63,16 +59,15 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
             int maxCount = accessLimit.maxCount();
             boolean needLogin = accessLimit.needLogin();
             if(needLogin) {
+                key += request.getSession().getId();
+            }else {
                 if(StringUtils.isBlank(telphone)) {
                     render(response, "{\"code\":400,\"msg\":\"用户编号不存在\"}");
                     return false;
                 }
                 key += telphone;
-            }else {
-                //do nothing
             }
             log.info("key:"+key);
-            RedisUtil redisUtil = new RedisUtil(redisTemplate);
             Integer increment = (Integer)redisUtil.get(key);
             if(increment  == null) {
                 redisUtil.set(key,1,seconds);

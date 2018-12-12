@@ -1,6 +1,8 @@
 package org.apache.commons.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -15,13 +17,15 @@ import java.util.concurrent.TimeUnit;
  * 针对所有的Set 都是以s开头的方法                    不含通用方法
  * 针对所有的List 都是以l开头的方法
  */
+@Component
 public class RedisUtil {
 
+    @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
-    public RedisUtil(RedisTemplate<String, Object> redisTemplate){
+    /*public RedisUtil(RedisTemplate<String, Object> redisTemplate){
         this.redisTemplate = redisTemplate;
-    }
+    }*/
     //=============================common============================
     /**
      * 指定缓存失效时间
